@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces */
+  --color-page: #0b0d10;
+  --color-card: #1a1d23;
+  --color-field: #262a31;
+  --color-edge: #3a3f47;
+  --color-chain: #1f2329;
+
+  /* Text */
+  --color-ink: #e5e7eb;
+  --color-ink-muted: #9ca3af;
+  --color-on-brand: #0b0d10;
+
+  /* Brand */
+  --color-brand: #a6f163;
+  --color-brand-hover: #94e055;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Radius */
+  --radius-card: 20px;
+  --radius-field: 8px;
+
+  /* Shadows */
+  --shadow-card: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+html,
+body {
+  margin: 0;
+  background-color: #0b0d10;
+  color: #e5e7eb;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  min-height: 100svh;
+}
