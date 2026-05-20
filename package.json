@@ -1,0 +1,18 @@
+{
+  "name": "codeconnect",
+  "private": true,
+  "scripts": {
+    "dev:web": "pnpm --filter web dev",
+    "dev:next": "pnpm --filter nextjs dev",
+    "build:web": "pnpm --filter web build",
+    "build:next": "pnpm --filter nextjs build",
+    "preview:web": "pnpm --filter web preview",
+    "lint:web": "pnpm --filter web lint",
+    "lint:next": "pnpm --filter nextjs lint",
+    "dev": "pnpm --parallel --filter './apps/*' dev"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=11"
+  }
+}
