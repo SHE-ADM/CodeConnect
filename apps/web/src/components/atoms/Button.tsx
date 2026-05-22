@@ -18,12 +18,14 @@ const variantClasses: Record<Variant, string> = {
 export function Button({
   variant = 'primary',
   fullWidth = false,
+  type = 'button',
   className = '',
   children,
   ...props
 }: ButtonProps) {
   return (
     <button
+      type={type}
       {...props}
       className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-field transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses[variant]} ${fullWidth ? 'w-full' : ''} ${className}`}
     >

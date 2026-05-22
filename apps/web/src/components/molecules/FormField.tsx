@@ -1,39 +1,39 @@
+import type { InputHTMLAttributes } from 'react'
 import { Label } from '@/components/atoms/Label'
 import { Input } from '@/components/atoms/Input'
 
-type FormFieldProps = {
+type FormFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   id: string
   label: string
-  type?: 'text' | 'email' | 'password'
-  placeholder?: string
-  value: string
   onChange: (value: string) => void
-  autoComplete?: string
-  required?: boolean
+  invalid?: boolean
+  errorMessage?: string
 }
 
 export function FormField({
   id,
   label,
-  type = 'text',
-  placeholder,
-  value,
   onChange,
-  autoComplete,
-  required,
-}: FormFieldProps) {
+  invalid = false,
+  errorMessage,
+  ...props
+}: Readonly<FormFieldProps>) {
   return (
     <div className="space-y-1.5">
       <Label htmlFor={id}>{label}</Label>
       <Input
         id={id}
-        type={type}
-        placeholder={placeholder}
-        value={value}
         onChange={(e) => onChange(e.target.value)}
-        autoComplete={autoComplete}
-        required={required}
+        invalid={invalid}
+        aria-invalid={invalid || undefined}
+        aria-describedby={errorMessage ? `${id}-error` : undefined}
+        {...props}
       />
+      {errorMessage && (
+        <p id={`${id}-error`} className="text-xs text-red-500 mt-1" role="alert">
+          {errorMessage}
+        </p>
+      )}
     </div>
   )
 }

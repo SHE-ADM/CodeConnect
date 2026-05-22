@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
+import { useState, useCallback } from 'react'
 import { Button } from '@/components/atoms/Button'
 import { TextLink } from '@/components/atoms/TextLink'
 import { FormField } from '@/components/molecules/FormField'
@@ -17,22 +16,38 @@ type LoginFormProps = {
   onSubmit: (data: LoginData) => void
 }
 
-export function LoginForm({ onSubmit }: LoginFormProps) {
+type FormErrors = {
+  identifier?: string
+  password?: string
+}
+
+export function LoginForm({ onSubmit }: Readonly<LoginFormProps>) {
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
+  const [errors, setErrors] = useState<FormErrors>({})
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const validate = useCallback((): boolean => {
+    const next: FormErrors = {}
+    if (!identifier.trim()) next.identifier = 'Informe seu email ou usuário.'
+    if (password.length < 6) next.password = 'Senha deve ter ao menos 6 caracteres.'
+    setErrors(next)
+    return Object.keys(next).length === 0
+  }, [identifier, password])
+
+  const handleSubmit = useCallback((e: { preventDefault(): void }) => {
     e.preventDefault()
-    onSubmit({ identifier, password, remember })
-  }
+    if (validate()) {
+      onSubmit({ identifier, password, remember })
+    }
+  }, [identifier, password, remember, onSubmit, validate])
 
   return (
     <div>
       <h1 className="text-2xl font-bold text-ink mb-1">Login</h1>
       <p className="text-sm text-ink-muted mb-6">Boas-vindas! Faça seu login.</p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <FormField
           id="identifier"
           label="Email ou usuário"
@@ -41,7 +56,8 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           value={identifier}
           onChange={setIdentifier}
           autoComplete="username"
-          required
+          invalid={!!errors.identifier}
+          errorMessage={errors.identifier}
         />
         <FormField
           id="password"
@@ -51,12 +67,13 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           value={password}
           onChange={setPassword}
           autoComplete="current-password"
-          required
+          invalid={!!errors.password}
+          errorMessage={errors.password}
         />
         <RememberMeRow
           remember={remember}
           onRememberChange={setRemember}
-          forgotHref="#"
+          forgotHref="/esqueci-senha"
         />
         <Button type="submit" variant="primary" fullWidth>
           Login →
@@ -68,7 +85,9 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
         <SocialLoginGroup />
         <p className="text-center text-sm text-ink-muted">
           Ainda não tem conta?{' '}
-          <TextLink href="#">Crie seu cadastro! 📋</TextLink>
+          <TextLink href="/cadastro">
+            Crie seu cadastro! <span aria-hidden="true">📋</span>
+          </TextLink>
         </p>
       </div>
     </div>

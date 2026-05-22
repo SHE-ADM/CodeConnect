@@ -18,7 +18,7 @@ export function Checkbox({ id, checked, onChange, label }: CheckboxProps) {
         onChange={(e) => onChange(e.target.checked)}
         className="peer sr-only"
       />
-      <span className="w-4 h-4 rounded border border-edge bg-field peer-checked:bg-brand peer-checked:border-brand flex items-center justify-center transition-colors shrink-0">
+      <span className="w-4 h-4 rounded border border-edge bg-field peer-checked:bg-brand peer-checked:border-brand peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-page flex items-center justify-center transition-colors shrink-0">
         {checked && (
           <svg
             className="w-2.5 h-2.5 text-on-brand"

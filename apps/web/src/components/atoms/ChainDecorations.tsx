@@ -5,6 +5,7 @@ function ChainLinkSvg() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="w-full h-full"
+      aria-hidden="true"
     >
       <rect x="50" y="10" width="60" height="140" rx="30" stroke="currentColor" strokeWidth="12" />
       <rect x="10" y="60" width="140" height="60" rx="30" stroke="currentColor" strokeWidth="12" />

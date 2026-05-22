@@ -1,11 +1,12 @@
+import { useCallback } from 'react'
 import { AuthLayout } from '@/components/templates/AuthLayout'
 import { AuthBanner } from '@/components/organisms/AuthBanner'
 import { LoginForm } from '@/components/organisms/LoginForm'
 
 export default function LoginPage() {
-  function handleLogin(data: { identifier: string; password: string; remember: boolean }) {
-    console.log('login submit', data)
-  }
+  const handleLogin = useCallback((_data: { identifier: string; password: string; remember: boolean }) => {
+    // TODO: integrate with authentication API
+  }, [])
 
   return (
     <AuthLayout

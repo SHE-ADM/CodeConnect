@@ -9,6 +9,10 @@ export function AuthBanner({ imageSrc, imageAlt }: AuthBannerProps) {
       <img
         src={imageSrc}
         alt={imageAlt}
+        width={1920}
+        height={1080}
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
       />
     </div>
