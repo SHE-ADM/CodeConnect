@@ -3,7 +3,7 @@ type AuthBannerProps = {
   imageAlt: string
 }
 
-export function AuthBanner({ imageSrc, imageAlt }: AuthBannerProps) {
+export function AuthBanner({ imageSrc, imageAlt }: Readonly<AuthBannerProps>) {
   return (
     <div className="relative h-52 md:h-full overflow-hidden">
       <img
@@ -11,7 +11,8 @@ export function AuthBanner({ imageSrc, imageAlt }: AuthBannerProps) {
         alt={imageAlt}
         width={1920}
         height={1080}
-        loading="lazy"
+        loading="eager"
+        fetchPriority="high"
         decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
       />

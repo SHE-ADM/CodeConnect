@@ -1,28 +1,40 @@
 @import "tailwindcss";
 
 @theme {
+  /* ── Paleta CodeConnect (Figma — fonte de verdade) ───────────────── */
+  --color-offwhite:        #e1e1e1;
+  --color-cinza-escuro:    #171d1f;
+  --color-cinza-medio:     #888888;
+  --color-grafite:         #00090e;
+  --color-verde-destaque:  #81fe88;
+  --color-verde-petroleo:  #132e35;
+
+  /* ── Aliases semânticos (usados pelos componentes) ───────────────── */
   /* Surfaces */
-  --color-page: #0b0d10;
-  --color-card: #1a1d23;
-  --color-field: #262a31;
-  --color-edge: #3a3f47;
-  --color-chain: #1f2329;
+  --color-page:            var(--color-cinza-escuro);
+  --color-card:            var(--color-cinza-escuro);
+  --color-card-border:     var(--color-grafite);
+  --color-field:           var(--color-cinza-medio);
+  --color-field-ink:       var(--color-cinza-escuro);
+  --color-edge:            #3a3f47;
+  --color-chain:           #1f2329;
 
   /* Text */
-  --color-ink: #e5e7eb;
-  --color-ink-muted: #9ca3af;
-  --color-on-brand: #0b0d10;
+  --color-ink:             var(--color-offwhite);
+  --color-ink-muted:       var(--color-cinza-medio);
+  --color-on-brand:        var(--color-verde-petroleo);
 
   /* Brand */
-  --color-brand: #a6f163;
-  --color-brand-hover: #94e055;
+  --color-brand:           var(--color-verde-destaque);
+  --color-brand-hover:     #6fe076;
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Prompt', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   /* Radius */
-  --radius-card: 20px;
-  --radius-field: 8px;
+  --radius-card:   32px;
+  --radius-field:  4px;
+  --radius-button: 8px;
 
   /* Shadows */
   --shadow-card: 0 10px 40px -10px rgba(0, 0, 0, 0.6);

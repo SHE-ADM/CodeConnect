@@ -19,13 +19,13 @@ export function ChainDecorations() {
       className="absolute inset-0 overflow-hidden pointer-events-none"
       aria-hidden="true"
     >
-      <div className="absolute bottom-[-80px] right-[-80px] w-[420px] h-[420px] text-chain opacity-40 rotate-12">
+      <div className="absolute -bottom-20 -right-20 w-96 h-96 text-chain opacity-40 rotate-12">
         <ChainLinkSvg />
       </div>
-      <div className="absolute top-[-100px] left-[-80px] w-[360px] h-[360px] text-chain opacity-25 -rotate-6">
+      <div className="absolute -top-24 -left-20 w-96 h-96 text-chain opacity-25 -rotate-6">
         <ChainLinkSvg />
       </div>
-      <div className="absolute top-1/3 right-[-50px] w-[210px] h-[210px] text-chain opacity-15 rotate-6">
+      <div className="absolute top-1/3 -right-12 w-52 h-52 text-chain opacity-15 rotate-6">
         <ChainLinkSvg />
       </div>
     </div>

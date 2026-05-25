@@ -5,7 +5,7 @@ type CheckboxProps = {
   label: string
 }
 
-export function Checkbox({ id, checked, onChange, label }: CheckboxProps) {
+export function Checkbox({ id, checked, onChange, label }: Readonly<CheckboxProps>) {
   return (
     <label
       htmlFor={id}
@@ -18,10 +18,10 @@ export function Checkbox({ id, checked, onChange, label }: CheckboxProps) {
         onChange={(e) => onChange(e.target.checked)}
         className="peer sr-only"
       />
-      <span className="w-4 h-4 rounded border border-edge bg-field peer-checked:bg-brand peer-checked:border-brand peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-page flex items-center justify-center transition-colors shrink-0">
+      <span className="w-5 h-5 rounded-sm border-2 border-ink-muted bg-transparent peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-page flex items-center justify-center transition-colors shrink-0">
         {checked && (
           <svg
-            className="w-2.5 h-2.5 text-on-brand"
+            className="w-3 h-3 text-brand"
             viewBox="0 0 10 8"
             fill="none"
             aria-hidden="true"
@@ -29,7 +29,7 @@ export function Checkbox({ id, checked, onChange, label }: CheckboxProps) {
             <path
               d="M1 4L3.5 6.5L9 1"
               stroke="currentColor"
-              strokeWidth="1.5"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />

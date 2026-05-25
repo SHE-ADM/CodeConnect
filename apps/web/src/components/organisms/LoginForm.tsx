@@ -1,10 +1,13 @@
 import { useState, useCallback } from 'react'
 import { Button } from '@/components/atoms/Button'
 import { TextLink } from '@/components/atoms/TextLink'
+import { ArrowForwardIcon } from '@/components/atoms/icons/ArrowForwardIcon'
+import { AssignmentIcon } from '@/components/atoms/icons/AssignmentIcon'
 import { FormField } from '@/components/molecules/FormField'
 import { RememberMeRow } from '@/components/molecules/RememberMeRow'
 import { DividerWithText } from '@/components/molecules/DividerWithText'
 import { SocialLoginGroup } from '@/components/organisms/SocialLoginGroup'
+import { useNavigation } from '@/contexts/NavigationContext'
 
 type LoginData = {
   identifier: string
@@ -22,6 +25,7 @@ type FormErrors = {
 }
 
 export function LoginForm({ onSubmit }: Readonly<LoginFormProps>) {
+  const { navigate } = useNavigation()
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
@@ -42,10 +46,15 @@ export function LoginForm({ onSubmit }: Readonly<LoginFormProps>) {
     }
   }, [identifier, password, remember, onSubmit, validate])
 
+  const handleGoToCadastro = useCallback((e: { preventDefault(): void }) => {
+    e.preventDefault()
+    navigate('cadastro')
+  }, [navigate])
+
   return (
     <div>
-      <h1 className="text-2xl font-bold text-ink mb-1">Login</h1>
-      <p className="text-sm text-ink-muted mb-6">Boas-vindas! Faça seu login.</p>
+      <h1 className="text-3xl font-semibold text-ink mb-2">Login</h1>
+      <p className="text-xl text-ink mb-6">Boas-vindas! Faça seu login.</p>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <FormField
@@ -76,19 +85,26 @@ export function LoginForm({ onSubmit }: Readonly<LoginFormProps>) {
           forgotHref="/esqueci-senha"
         />
         <Button type="submit" variant="primary" fullWidth>
-          Login →
+          Login <ArrowForwardIcon className="w-5 h-5" />
         </Button>
       </form>
 
       <div className="mt-6 space-y-4">
         <DividerWithText>ou entre com outras contas</DividerWithText>
         <SocialLoginGroup />
-        <p className="text-center text-sm text-ink-muted">
-          Ainda não tem conta?{' '}
-          <TextLink href="/cadastro">
-            Crie seu cadastro! <span aria-hidden="true">📋</span>
-          </TextLink>
-        </p>
+        <div className="space-y-2">
+          <p className="text-center text-sm text-ink">Ainda não tem conta?</p>
+          <p className="text-center">
+            <TextLink
+              href="#"
+              onClick={handleGoToCadastro}
+              size="lg"
+              className="inline-flex items-center gap-3"
+            >
+              Crie seu cadastro! <AssignmentIcon className="w-6 h-6" />
+            </TextLink>
+          </p>
+        </div>
       </div>
     </div>
   )
