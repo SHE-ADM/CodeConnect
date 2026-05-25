@@ -30,7 +30,7 @@ export function FormField({
         {...props}
       />
       {errorMessage && (
-        <p id={`${id}-error`} className="text-xs text-red-500 mt-1" role="alert">
+        <p id={`${id}-error`} className="text-xs text-red-400 mt-1" role="alert">
           {errorMessage}
         </p>
       )}
