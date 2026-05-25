@@ -8,7 +8,7 @@ export function Input({ invalid = false, className = '', ...props }: InputProps)
   return (
     <input
       {...props}
-      className={`w-full bg-field border ${invalid ? 'border-red-500' : 'border-edge'} rounded-field px-3 py-2.5 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-brand/60 transition-colors ${className}`}
+      className={`w-full bg-field border ${invalid ? 'border-red-500' : 'border-field'} rounded-field px-4 py-2 text-sm text-field-ink placeholder:text-field-ink/60 outline-none focus:border-brand transition-colors ${className}`}
     />
   )
 }

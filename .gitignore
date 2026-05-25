@@ -41,3 +41,11 @@ Thumbs.db
 
 # vercel
 .vercel
+
+# Figma — source files (binary, large)
+Figma/
+
+# Playwright
+**/playwright-report/
+**/test-results/
+**/playwright/.cache/

@@ -9,7 +9,10 @@
     "preview:web": "pnpm --filter web preview",
     "lint:web": "pnpm --filter web lint",
     "lint:next": "pnpm --filter nextjs lint",
-    "dev": "pnpm --parallel --filter './apps/*' dev"
+    "dev": "pnpm --parallel --filter './apps/*' dev",
+    "type-check": "pnpm --parallel --filter './apps/*' type-check",
+    "lint": "pnpm --parallel --filter './apps/*' lint",
+    "test:a11y:web": "pnpm --filter web test:a11y"
   },
   "engines": {
     "node": ">=20",

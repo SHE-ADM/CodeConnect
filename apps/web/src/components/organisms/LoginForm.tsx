@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
+import { useState, useCallback } from 'react'
 import { Button } from '@/components/atoms/Button'
 import { TextLink } from '@/components/atoms/TextLink'
+import { ArrowForwardIcon } from '@/components/atoms/icons/ArrowForwardIcon'
+import { AssignmentIcon } from '@/components/atoms/icons/AssignmentIcon'
 import { FormField } from '@/components/molecules/FormField'
 import { RememberMeRow } from '@/components/molecules/RememberMeRow'
 import { DividerWithText } from '@/components/molecules/DividerWithText'
 import { SocialLoginGroup } from '@/components/organisms/SocialLoginGroup'
+import { useNavigation } from '@/contexts/NavigationContext'
 
 type LoginData = {
   identifier: string
@@ -17,22 +19,44 @@ type LoginFormProps = {
   onSubmit: (data: LoginData) => void
 }
 
-export function LoginForm({ onSubmit }: LoginFormProps) {
+type FormErrors = {
+  identifier?: string
+  password?: string
+}
+
+export function LoginForm({ onSubmit }: Readonly<LoginFormProps>) {
+  const { navigate } = useNavigation()
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [remember, setRemember] = useState(false)
+  const [errors, setErrors] = useState<FormErrors>({})
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const validate = useCallback((): boolean => {
+    const next: FormErrors = {}
+    if (!identifier.trim()) next.identifier = 'Informe seu email ou usuário.'
+    if (password.length < 6) next.password = 'Senha deve ter ao menos 6 caracteres.'
+    setErrors(next)
+    return Object.keys(next).length === 0
+  }, [identifier, password])
+
+  const handleSubmit = useCallback((e: { preventDefault(): void }) => {
     e.preventDefault()
-    onSubmit({ identifier, password, remember })
-  }
+    if (validate()) {
+      onSubmit({ identifier, password, remember })
+    }
+  }, [identifier, password, remember, onSubmit, validate])
+
+  const handleGoToCadastro = useCallback((e: { preventDefault(): void }) => {
+    e.preventDefault()
+    navigate('cadastro')
+  }, [navigate])
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-ink mb-1">Login</h1>
-      <p className="text-sm text-ink-muted mb-6">Boas-vindas! Faça seu login.</p>
+      <h1 className="text-3xl font-semibold text-ink mb-2">Login</h1>
+      <p className="text-xl text-ink mb-6">Boas-vindas! Faça seu login.</p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <FormField
           id="identifier"
           label="Email ou usuário"
@@ -41,7 +65,8 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           value={identifier}
           onChange={setIdentifier}
           autoComplete="username"
-          required
+          invalid={!!errors.identifier}
+          errorMessage={errors.identifier}
         />
         <FormField
           id="password"
@@ -51,25 +76,35 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           value={password}
           onChange={setPassword}
           autoComplete="current-password"
-          required
+          invalid={!!errors.password}
+          errorMessage={errors.password}
         />
         <RememberMeRow
           remember={remember}
           onRememberChange={setRemember}
-          forgotHref="#"
+          forgotHref="/esqueci-senha"
         />
         <Button type="submit" variant="primary" fullWidth>
-          Login →
+          Login <ArrowForwardIcon className="w-5 h-5" />
         </Button>
       </form>
 
       <div className="mt-6 space-y-4">
         <DividerWithText>ou entre com outras contas</DividerWithText>
         <SocialLoginGroup />
-        <p className="text-center text-sm text-ink-muted">
-          Ainda não tem conta?{' '}
-          <TextLink href="#">Crie seu cadastro! 📋</TextLink>
-        </p>
+        <div className="space-y-2">
+          <p className="text-center text-sm text-ink">Ainda não tem conta?</p>
+          <p className="text-center">
+            <TextLink
+              href="#"
+              onClick={handleGoToCadastro}
+              size="lg"
+              className="inline-flex items-center gap-3"
+            >
+              Crie seu cadastro! <AssignmentIcon className="w-6 h-6" />
+            </TextLink>
+          </p>
+        </div>
       </div>
     </div>
   )

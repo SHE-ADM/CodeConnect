@@ -1,12 +1,15 @@
 import { useCallback } from 'react'
 import { AuthLayout } from '@/components/templates/AuthLayout'
 import { AuthBanner } from '@/components/organisms/AuthBanner'
-import { LoginForm } from '@/components/organisms/LoginForm'
+import { CadastroForm } from '@/components/organisms/CadastroForm'
 
-export default function LoginPage() {
-  const handleLogin = useCallback((_data: { identifier: string; password: string; remember: boolean }) => {
-    // TODO: integrate with authentication API
-  }, [])
+export default function CadastroPage() {
+  const handleCadastro = useCallback(
+    (_data: { name: string; email: string; password: string; remember: boolean }) => {
+      // TODO: integrate with authentication API
+    },
+    []
+  )
 
   return (
     <AuthLayout
@@ -16,7 +19,7 @@ export default function LoginPage() {
           imageAlt="Ilustração CodeConnect — pessoa programando"
         />
       }
-      form={<LoginForm onSubmit={handleLogin} />}
+      form={<CadastroForm onSubmit={handleCadastro} />}
     />
   )
 }

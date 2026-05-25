@@ -11,7 +11,7 @@ export function RememberMeRow({
   remember,
   onRememberChange,
   forgotHref,
-}: RememberMeRowProps) {
+}: Readonly<RememberMeRowProps>) {
   return (
     <div className="flex items-center justify-between">
       <Checkbox
@@ -20,7 +20,9 @@ export function RememberMeRow({
         onChange={onRememberChange}
         label="Lembrar-me"
       />
-      <TextLink href={forgotHref}>Esqueci a senha</TextLink>
+      <TextLink href={forgotHref} tone="ink" underline>
+        Esqueci a senha
+      </TextLink>
     </div>
   )
 }

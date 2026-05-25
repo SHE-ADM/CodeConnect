@@ -10,17 +10,17 @@ const config: Record<Provider, { src: string; label: string }> = {
   google: { src: '/Google.png', label: 'Gmail' },
 }
 
-export function SocialLoginButton({ provider, onClick }: SocialLoginButtonProps) {
+export function SocialLoginButton({ provider, onClick }: Readonly<SocialLoginButtonProps>) {
   const { src, label } = config[provider]
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={`Entrar com ${label}`}
-      className="flex flex-col items-center gap-1.5 py-3 px-6 rounded-field bg-field hover:bg-edge transition-colors cursor-pointer"
+      className="flex flex-col items-center gap-1 py-2 px-4 rounded-button cursor-pointer transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-card"
     >
       <img src={src} alt="" aria-hidden="true" className="w-8 h-8 object-contain" />
-      <span className="text-xs text-ink-muted">{label}</span>
+      <span className="text-xs text-ink">{label}</span>
     </button>
   )
 }

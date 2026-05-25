@@ -71,6 +71,71 @@ PostCSS plugin is `@tailwindcss/postcss`, not the old `tailwindcss` plugin.
 
 `tsconfig.json` enables `erasableSyntaxOnly` — TypeScript features that require emit-time transformation (decorators, `const enum`, `namespace`) are not allowed. Use only syntax that can be statically erased.
 
+## Frontend: Design tokens & styling (Tailwind v4)
+
+Applies to both apps. Custom tokens live in `@theme` blocks — `apps/nextjs/app/globals.css` and `apps/web/src/index.css`. Never use inline `style={{}}` when a Tailwind class exists.
+
+### Colors — extend the theme, never hardcode
+
+Forbidden in components: `bg-[#81fe88]`, `text-[#e1e1e1]`, `border-[#00090e]` — any `[#xxxxxx]` in a class is a bug.
+
+Extend the palette in `@theme` with a **two-layer pattern**:
+
+1. **Raw palette** — token names mirror the Figma design system (e.g. `--color-verde-destaque`, `--color-cinza-escuro`). These are the source of truth.
+2. **Semantic aliases** — role/surface names referencing the raw tokens (e.g. `--color-brand: var(--color-verde-destaque)`).
+
+```css
+@theme {
+  /* Raw palette — Figma source of truth */
+  --color-offwhite:       #e1e1e1;
+  --color-verde-destaque: #81fe88;
+  --color-verde-petroleo: #132e35;
+
+  /* Semantic aliases — used by components */
+  --color-ink:      var(--color-offwhite);
+  --color-brand:    var(--color-verde-destaque);
+  --color-on-brand: var(--color-verde-petroleo);
+}
+```
+
+Both layers generate Tailwind utilities automatically (`bg-verde-destaque` AND `bg-brand`). Components MUST use the **semantic alias** (`bg-brand`, `text-ink`), never the raw name directly — that keeps Figma renames isolated to the CSS file.
+
+### Sizes — use Tailwind tokens, not arbitrary pixels
+
+Forbidden in components: `text-[15px]`, `gap-[12px]`, `p-[18px]`, `rounded-[20px]`, `w-[420px]` — any `[NNpx]` in a class is a bug.
+
+Map every Figma pixel value to the closest Tailwind token:
+
+| Figma size | Token | px |
+|---|---|---|
+| 12 / 12.5 | `text-xs` | 12 |
+| 14 / 15 | `text-sm` | 14 |
+| 16 | `text-base` | 16 |
+| 18 | `text-lg` | 18 |
+| 20 / 22 | `text-xl` | 20 |
+| 24 / 26 | `text-2xl` | 24 |
+| 30 / 31 | `text-3xl` | 30 |
+
+When a Figma value sits exactly between two tokens (e.g. 22px between `text-xl` 20px and `text-2xl` 24px), pick the **smaller** one — staying conservative reads better and avoids visual creep.
+
+Same rule for the spacing scale (`gap-*`, `p-*`, `m-*`, `w-*`, `h-*`): prefer the 4px-step Tailwind scale (`gap-2` = 8px, `gap-4` = 16px) over arbitrary `[12px]`.
+
+### Radius and shadows
+
+Define semantic radius tokens in `@theme`: `--radius-card`, `--radius-field`, `--radius-button`. Components use semantic utilities (`rounded-card`, `rounded-field`, `rounded-button`) — never arbitrary `rounded-[NNpx]`.
+
+### Extending the scale when no token fits
+
+If a design value sits clearly outside the closest Tailwind token (e.g. a 420px decorative element with no acceptable equivalent in the default spacing scale), **extend the theme** rather than dropping to an arbitrary value:
+
+```css
+@theme {
+  --spacing-decoration-lg: 26rem;  /* 416px */
+}
+```
+
+This generates `w-decoration-lg`, `h-decoration-lg`, etc. Same rule as colors: tokens in `@theme`, never `[NNpx]` in a class — not even for decorative ornaments.
+
 ## apps/nextjs architecture
 
 - **App Router** — all routes live under `app/`. No `pages/` directory.
