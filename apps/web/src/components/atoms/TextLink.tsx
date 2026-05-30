@@ -1,38 +1,42 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from '../../lib/utils'
 
-type Size = 'sm' | 'lg'
-type Tone = 'brand' | 'ink'
+const textLink = cva('transition-colors cursor-pointer', {
+  variants: {
+    size: {
+      sm: 'text-sm',
+      lg: 'text-lg',
+    },
+    tone: {
+      brand: 'text-brand hover:text-brand-hover',
+      ink: 'text-ink hover:text-ink',
+    },
+    underline: {
+      true: 'underline',
+    },
+  },
+  defaultVariants: {
+    size: 'sm',
+    tone: 'brand',
+  },
+})
 
-type TextLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  underline?: boolean
-  size?: Size
-  tone?: Tone
-  children: ReactNode
-}
-
-const sizeClasses: Record<Size, string> = {
-  sm: 'text-sm',
-  lg: 'text-lg',
-}
-
-const toneClasses: Record<Tone, string> = {
-  brand: 'text-brand hover:text-brand-hover',
-  ink: 'text-ink hover:text-ink',
-}
+type TextLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> &
+  VariantProps<typeof textLink> & {
+    children: ReactNode
+  }
 
 export function TextLink({
-  underline = false,
-  size = 'sm',
-  tone = 'brand',
-  className = '',
+  size,
+  tone,
+  underline,
+  className,
   children,
   ...props
 }: Readonly<TextLinkProps>) {
   return (
-    <a
-      {...props}
-      className={`${sizeClasses[size]} ${toneClasses[tone]} transition-colors cursor-pointer ${underline ? 'underline' : ''} ${className}`}
-    >
+    <a {...props} className={cn(textLink({ size, tone, underline }), className)}>
       {children}
     </a>
   )
