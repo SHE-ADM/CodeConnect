@@ -12,7 +12,7 @@ export default function LoginPage() {
     <AuthLayout
       banner={
         <AuthBanner
-          imageSrc="/IMG2_Tablet.png"
+          imageSrc="/IMG_Login.png"
           imageAlt="Ilustração CodeConnect — pessoa programando"
         />
       }

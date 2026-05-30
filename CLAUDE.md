@@ -100,6 +100,39 @@ Extend the palette in `@theme` with a **two-layer pattern**:
 
 Both layers generate Tailwind utilities automatically (`bg-verde-destaque` AND `bg-brand`). Components MUST use the **semantic alias** (`bg-brand`, `text-ink`), never the raw name directly — that keeps Figma renames isolated to the CSS file.
 
+#### Theme-switching & state colors — one token, not `dark:` pairs
+
+When a color differs between light and dark mode (or per state, e.g. a hover shade), do **not** branch in the component with arbitrary hex like `hover:bg-[#383838] dark:hover:bg-[#ccc]`. Define a CSS variable on `:root`, override it inside `@media (prefers-color-scheme: dark)`, map it in `@theme inline`, and reference a **single** semantic utility. The variable carries the theme switch, so the `dark:` variant disappears.
+
+```css
+:root {
+  --foreground-hover: #383838;            /* hover do botão sólido */
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --surface-hover: rgba(0, 0, 0, 0.04);
+}
+
+@theme inline {
+  --color-foreground-hover: var(--foreground-hover);
+  --color-border-subtle:    var(--border-subtle);
+  --color-surface-hover:    var(--surface-hover);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-hover: #cccccc;
+    --border-subtle: rgba(255, 255, 255, 0.145);
+    --surface-hover: #1a1a1a;
+  }
+}
+```
+
+```diff
+- className="... hover:bg-[#383838] dark:hover:bg-[#ccc]"
++ className="... hover:bg-foreground-hover"
+```
+
+This also bans arbitrary opacity values (`border-black/[.08]`, `bg-white/[.145]`) — fold the alpha into the token (`rgba(...)`) and expose it as a color (`border-border-subtle`).
+
 ### Sizes — use Tailwind tokens, not arbitrary pixels
 
 Forbidden in components: `text-[15px]`, `gap-[12px]`, `p-[18px]`, `rounded-[20px]`, `w-[420px]` — any `[NNpx]` in a class is a bug.

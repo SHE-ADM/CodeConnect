@@ -3,11 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --foreground-hover: #383838;            /* hover do botão sólido */
+  --border-subtle: rgba(0, 0, 0, 0.08);   /* borda translúcida do botão outline */
+  --surface-hover: rgba(0, 0, 0, 0.04);   /* hover do botão outline */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-hover: var(--foreground-hover);
+  --color-border-subtle: var(--border-subtle);
+  --color-surface-hover: var(--surface-hover);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -16,6 +22,9 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --foreground-hover: #cccccc;
+    --border-subtle: rgba(255, 255, 255, 0.145);
+    --surface-hover: #1a1a1a;
   }
 }
 
