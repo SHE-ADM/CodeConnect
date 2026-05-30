@@ -15,8 +15,8 @@ export default function CadastroPage() {
     <AuthLayout
       banner={
         <AuthBanner
-          imageSrc="/IMG2_Tablet.png"
-          imageAlt="Ilustração CodeConnect — pessoa programando"
+          imageSrc="/IMG_Cadastro.png"
+          imageAlt="Ilustração CodeConnect — pessoa desenvolvedora ao computador"
         />
       }
       form={<CadastroForm onSubmit={handleCadastro} />}
