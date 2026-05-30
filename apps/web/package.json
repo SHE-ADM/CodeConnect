@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "optimize:images": "node scripts/optimize-images.mjs",
     "build": "tsc && vite build",
     "type-check": "tsc --noEmit",
     "preview": "vite preview",
@@ -18,13 +19,17 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
+    "sharp": "^0.34.5",
     "typescript": "~6.0.2",
     "vite": "^8.0.12"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.0"
   }
 }
