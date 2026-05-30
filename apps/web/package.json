@@ -8,9 +8,7 @@
     "optimize:images": "node scripts/optimize-images.mjs",
     "build": "tsc && vite build",
     "type-check": "tsc --noEmit",
-    "preview": "vite preview",
-    "test:a11y": "playwright test",
-    "test:a11y:report": "playwright show-report"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
